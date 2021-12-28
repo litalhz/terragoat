@@ -263,6 +263,7 @@ Resources:
             AWS: !Sub arn:aws:iam::${AWS::AccountId}:root
           Action: kms:*
           Resource: '*'
+      EnableKeyRotation: True
 
   LogsKeyAlias:
     Type: AWS::KMS::Alias
