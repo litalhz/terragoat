@@ -1,4 +1,5 @@
 # Create a new load balancer
+# comment
 resource "aws_elb" "weblb" {
   name = "weblb-terraform-elb"
 
