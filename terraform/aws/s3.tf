@@ -36,6 +36,20 @@ resource "aws_s3_bucket" "financials" {
 
 }
 
+resource "aws_s3_bucket" "financials3" {
+  # bucket is not encrypted
+  # bucket does not have access logs
+  # bucket does not have versioning
+  bucket        = "${local.resource_prefix.value}-financials3"
+  acl           = "private"
+  force_destroy = true
+  tags = {
+    Name        = "${local.resource_prefix.value}-financials3"
+    Environment = local.resource_prefix.value
+  }
+
+}
+
 resource "aws_s3_bucket" "operations" {
   # bucket is not encrypted
   # bucket does not have access logs
