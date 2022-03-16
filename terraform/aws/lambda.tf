@@ -36,3 +36,42 @@ resource "aws_lambda_function" "analysis_lambda" {
     }
   }
 }
+
+resource "aws_iam_role" "iam_for_lambda2" {
+  name = "${local.resource_prefix.value}-analysis-lambda2"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_lambda_function" "analysis_lambda2" {
+  # lambda have plain text secrets in environment variables
+  filename      = "resources/lambda_function_payload2.zip"
+  function_name = "${local.resource_prefix.value}-analysis2"
+  role          = "${aws_iam_role.iam_for_lambda2.arn}"
+  handler       = "exports.test"
+
+  source_code_hash = "${filebase64sha256("resources/lambda_function_payload2.zip")}"
+
+  runtime = "nodejs12.x"
+
+  environment {
+    variables = {
+      access_key = "AKIAIOSFODNN7EXAMPLE"
+      secret_key = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+    }
+  }
+}
