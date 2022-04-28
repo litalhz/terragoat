@@ -35,6 +35,9 @@ resource "aws_lambda_function" "analysis_lambda" {
       secret_key = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
     }
   }
+  tracing_config {
+    mode = "PassThrough"
+  }
 }
 
 resource "aws_lambda_function" "analysis_lambda2" {
