@@ -66,6 +66,20 @@ resource "aws_s3_bucket" "data_science" {
   force_destroy = true
 }
 
+resource "aws_s3_bucket" "data_science2" {
+  # bucket is not encrypted
+  bucket = "${local.resource_prefix.value}-data-science2"
+  acl    = "private"
+  versioning {
+    enabled = true
+  }
+  logging {
+    target_bucket = "${aws_s3_bucket.logs.id}"
+    target_prefix = "log/"
+  }
+  force_destroy = true
+}
+
 resource "aws_s3_bucket" "logs" {
   bucket = "${local.resource_prefix.value}-logs"
   acl    = "log-delivery-write"
