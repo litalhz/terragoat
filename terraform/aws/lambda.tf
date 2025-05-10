@@ -1,5 +1,5 @@
-resource "aws_iam_role" "iam_for_lambda" {
-  name = "${local.resource_prefix.value}-analysis-lambda"
+resource "aws_iam_role" "iam_for_lambda2" {
+  name = "${local.resource_prefix.value}-analysis-lambda2"
 
   assume_role_policy = <<EOF
 {
@@ -18,11 +18,11 @@ resource "aws_iam_role" "iam_for_lambda" {
 EOF
 }
 
-resource "aws_lambda_function" "analysis_lambda" {
+resource "aws_lambda_function" "analysis_lambda2" {
   # lambda have plain text secrets in environment variables
   filename      = "resources/lambda_function_payload.zip"
   function_name = "${local.resource_prefix.value}-analysis"
-  role          = "${aws_iam_role.iam_for_lambda.arn}"
+  role          = "${aws_iam_role.iam_for_lambda2.arn}"
   handler       = "exports.test"
 
   source_code_hash = "${filebase64sha256("resources/lambda_function_payload.zip")}"
